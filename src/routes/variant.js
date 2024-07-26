@@ -1,8 +1,10 @@
 import VariantController from "../controllers/VariantController.js";
-import BaseRouter from "../router/BaseRouter.js";
+import BaseRouter from "./BaseRouter.js";
 
-export class VariantRouter extends BaseRouter {
+class VariantRouter extends BaseRouter {
   constructor() {
-    super(new VariantController());
+    super(new VariantController(), "variants");
   }
 }
+
+export default VariantRouter;

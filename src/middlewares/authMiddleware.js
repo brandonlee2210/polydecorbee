@@ -9,7 +9,7 @@ export const requireAuth = (req, res, next) => {
     jwt.verify(token, "polydecor", (err, decoded) => {
       if (err) {
         console.error(err.message);
-        res.json({ error: "Unauthorized" })
+        res.json({ error: "Unauthorized" });
       } else {
         console.log(decoded);
         next();

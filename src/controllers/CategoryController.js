@@ -4,7 +4,6 @@ import Category from "../models/Category.js";
 
 export default class CategoryController extends BaseController {
   constructor() {
-    console.log("categoryu", Category);
     super(Category);
   }
 }

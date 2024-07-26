@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 const productSchema = new mongoose.Schema({
   productName: {
     type: String,
@@ -15,11 +14,11 @@ const productSchema = new mongoose.Schema({
   },
   imageID: {
     type: mongoose.Schema.Types.ObjectId,
-
   },
-  categoryID: { // Changed from 'category' to 'categoryID' to reference the Category model
+  categoryID: {
+    // Changed from 'category' to 'categoryID' to reference the Category model
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category', // Reference to the Category model
+    ref: "Category", // Reference to the Category model
     required: true,
   },
   productID: {
@@ -27,9 +26,12 @@ const productSchema = new mongoose.Schema({
     required: true,
     auto: true,
   },
-
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 });
- 
+
 const Product = mongoose.model("Product", productSchema);
 
 export default Product;

@@ -1,8 +1,10 @@
 import OrderController from "../controllers/OrderController.js";
-import BaseRouter from "../router/BaseRouter.js";
+import BaseRouter from "./BaseRouter.js";
 
-export class OrderRouter extends BaseRouter {
+class OrderRouter extends BaseRouter {
   constructor() {
-    super(new OrderController());
+    super(new OrderController(), "orders");
   }
 }
+
+export default OrderRouter;

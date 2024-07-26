@@ -10,20 +10,24 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  orderDate: {
-    type: Date,
-    required: true,
-  },
-  orderDetailID: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-  },
   userID: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   paymentID: {
     type: mongoose.Schema.Types.ObjectId,
+  },
+  status: {
+    type: Number,
+    default: 1,
+  },
+  orderDate: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+  address: {
+    type: String,
     required: true,
   },
 });

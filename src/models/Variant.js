@@ -6,12 +6,6 @@ const variantSchema = new mongoose.Schema({
     required: true,
     auto: true,
   },
-  material: {
-    type: String,
-  },
-  color: {
-    type: String,
-  },
   price: {
     type: Number,
   },
@@ -34,6 +28,17 @@ const variantSchema = new mongoose.Schema({
   },
   image: {
     type: String,
+  },
+  // colors array contains objecs value and quantity
+  variants: {
+    type: Array,
+    default: [],
+    schema: {
+      color: String,
+      material: String,
+      quantity: Number,
+      price: Number,
+    },
   },
 });
 

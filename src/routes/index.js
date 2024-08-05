@@ -23,6 +23,21 @@ orderRouter.addRouter(
 );
 orderRouter.addRouter(
   "get",
+  "/ordersByUser/:userId",
+  orderRouter.controller.getOrdersByUserId
+);
+orderRouter.addRouter(
+  "get",
+  "/orders/variants/:categoryName",
+  orderRouter.controller.getVariantsByCategoryId
+);
+orderRouter.addRouter(
+  "post",
+  "/orders/update-stock",
+  orderRouter.controller.updateStock
+);
+orderRouter.addRouter(
+  "get",
   "/orders/details/:orderId",
   orderRouter.controller.getOrderDetailsByOrderId
 );

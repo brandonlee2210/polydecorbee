@@ -10,6 +10,14 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  fullname: {
+    type: String,
+    default: "gia bảo",
+  },
+  phoneNumber: {
+    type: String,
+    default: "0364350578",
+  },
   userID: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,

@@ -6,6 +6,12 @@ const orderDetailSchema = new mongoose.Schema({
     required: true,
     auto: true,
   },
+  name: {
+    type: String,
+  },
+  categoryName: {
+    type: String,
+  },
   quantity: {
     type: Number,
     required: true,

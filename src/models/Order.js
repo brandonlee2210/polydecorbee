@@ -38,6 +38,14 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  createdDate: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedDate: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const Order = mongoose.model("Order", orderSchema);

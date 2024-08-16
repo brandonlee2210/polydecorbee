@@ -19,6 +19,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
+  createdDate: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedDate: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 // fire a function before doc saved to db

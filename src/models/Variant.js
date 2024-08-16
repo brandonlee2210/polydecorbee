@@ -40,6 +40,26 @@ const variantSchema = new mongoose.Schema({
       price: Number,
     },
   },
+  createdDate: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedDate: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+// Middleware to update the updatedDate before saving
+variantSchema.pre("save", function (next) {
+  this.updatedDate = Date.now();
+  next();
+});
+
+// Middleware to update the updatedDate before updating
+variantSchema.pre("findOneAndUpdate", function (next) {
+  this.set({ updatedDate: Date.now() });
+  next();
 });
 
 const Variant = mongoose.model("Variant", variantSchema);

@@ -19,6 +19,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
+  email: {
+    type: String,
+    required: false, // Trường email không yêu cầu
+    unique: false,   // Không yêu cầu duy nhất
+  },
 });
 
 // fire a function before doc saved to db

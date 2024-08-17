@@ -137,7 +137,7 @@ app.post("/api/v1/send-email", (req, res) => {
   // Setup email data
   let mailOptions = {
     from: '"Poly Decor Shop" <your-email@gmail.com>', // sender address
-    to: "baodgph30207@fpt.edu.vn", // list of receivers
+    to: "sonpnph30176@fpt.edu.vn", // list of receivers
     subject: "Xác Nhận Đơn Hàng", // Subject line
     html: customizedHtml, // HTML body content
   };

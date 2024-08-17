@@ -1,9 +1,9 @@
-import VariantController from "../controllers/VariantController.js";
+import VariantProductController from "../controllers/VariantProductController.js";
 import BaseRouter from "./BaseRouter.js";
 
 class VariantProductRouter extends BaseRouter {
   constructor() {
-    super(new VariantController(), "variantProducts");
+    super(new VariantProductController(), "variantProducts");
   }
 }
 

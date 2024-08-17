@@ -40,7 +40,7 @@ export default class VariantController extends BaseController {
 
     res = res.filter((variant) => {
       return (
-        variant.name.toLowerCase().includes("") &&
+        variant.name.toLowerCase().includes(keyword) &&
         variant.variants.some(
           (v) =>
             v.color.toLowerCase().includes(color.toLowerCase()) &&

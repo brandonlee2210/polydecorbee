@@ -1,14 +1,22 @@
 import mongoose from "mongoose";
 
 const commentSchema = new mongoose.Schema({
-  src: {
-    type: String,
-    required: true,
-  },
-  imageID: {
+  commentID: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     auto: true,
+  },
+  body: {
+    type: String,
+    required: true,
+  },
+  productID: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  userID: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
   },
   createdDate: {
     type: Date,

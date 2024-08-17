@@ -1,4 +1,4 @@
-import CommentController from "../controllers/CategoryController.js";
+import CommentController from "../controllers/CommentController.js";
 import BaseRouter from "./BaseRouter.js";
 
 class CommentRouter extends BaseRouter {

@@ -24,11 +24,26 @@ const router = Router();
 router.use("/", new CategoryRouter().route);
 // router.use("/", new ProductRouter().route);
 router.use("/", authRouter);
-router.use("/", new VariantRouter().route);
+
+const variantRouter = new VariantRouter();
+variantRouter.addRouter(
+  "post",
+  "/variants/filtered",
+  variantRouter.controller.getAllPaginationFiltered
+);
+router.use("/", variantRouter.route);
+
 router.use("/", new OrderRouter().route);
 router.use("/", new OrderDetailRouter().route);
 router.use("/", new VariantProductRouter().route);
-router.use("/", new CommentRouter().route);
+
+const commentRouter = new CommentRouter();
+commentRouter.addRouter(
+  "get",
+  "/comments/byproduct/:id",
+  commentRouter.controller.getCommentsByProductId
+);
+router.use("/", commentRouter.route);
 
 const orderRouter = new OrderRouter();
 orderRouter.addRouter(

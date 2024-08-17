@@ -6,18 +6,13 @@ const variantProductSchema = new mongoose.Schema({
     required: true,
     auto: true,
   },
-  price: {
-    type: Number,
-  },
-  color: {
+  variantProductName: {
     type: String,
     required: true,
   },
-  material: {
+  variantProductType: {
     type: String,
-  },
-  quantity: {
-    type: Number,
+    required: true,
   },
 });
 

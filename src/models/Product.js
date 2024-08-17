@@ -26,9 +26,13 @@ const productSchema = new mongoose.Schema({
     required: true,
     auto: true,
   },
-  isDeleted: {
-    type: Boolean,
-    default: false,
+  createdDate: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedDate: {
+    type: Date,
+    default: Date.now,
   },
 });
 

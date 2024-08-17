@@ -23,6 +23,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false, // Trường email không yêu cầu
     unique: false,   // Không yêu cầu duy nhất
+  createdDate: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedDate: {
+    type: Date,
+    default: Date.now,
   },
 });
 

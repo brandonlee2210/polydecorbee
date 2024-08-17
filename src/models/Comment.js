@@ -1,14 +1,22 @@
 import mongoose from "mongoose";
 
-const categorySchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  categoryID: {
+const commentSchema = new mongoose.Schema({
+  commentID: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     auto: true,
+  },
+  body: {
+    type: String,
+    required: true,
+  },
+  productID: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  userID: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
   },
   createdDate: {
     type: Date,
@@ -21,17 +29,17 @@ const categorySchema = new mongoose.Schema({
 });
 
 // Middleware to update the updatedDate before saving
-categorySchema.pre("save", function (next) {
+commentSchema.pre("save", function (next) {
   this.updatedDate = Date.now();
   next();
 });
 
 // Middleware to update the updatedDate before updating
-categorySchema.pre("findOneAndUpdate", function (next) {
+commentSchema.pre("findOneAndUpdate", function (next) {
   this.set({ updatedDate: Date.now() });
   next();
 });
 
-const Category = mongoose.model("Category", categorySchema);
+const Comment = mongoose.model("Comment", commentSchema);
 
-export default Category;
+export default Comment;

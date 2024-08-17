@@ -35,7 +35,10 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-mongoose.connect(`${MONGO_URL}`).then(() => console.log("Database Connected!"));
+mongoose
+  .connect(`${MONGO_URL}`)
+  .then(() => console.log("Database Connected!"))
+  .catch((err) => console.log(err));
 app.use("/api/v1", router);
 app.post("/api/v1/send-email", (req, res) => {
   // Read the HTML template

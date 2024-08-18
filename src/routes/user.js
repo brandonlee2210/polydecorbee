@@ -1,8 +1,8 @@
 import UserController from "../controllers/UserController.js";
-import BaseRouter from "../router/BaseRouter.js";
+import BaseRouter from "./BaseRouter.js";
 
-export class UserRouter extends BaseRouter {
+export default class UserRouter extends BaseRouter {
   constructor() {
-    super(new UserController());
+    super(new UserController(), "users");
   }
 }

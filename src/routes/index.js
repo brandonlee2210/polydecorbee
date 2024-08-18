@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import CategoryRouter from "./category.js";
 import VariantRouter from "./variant.js";
+import UserRouter from "./user.js";
 import OrderRouter from "./order.js";
 import authRouter from "./auth.js";
 import OrderDetailRouter from "./orderDetail.js";
@@ -33,6 +34,7 @@ variantRouter.addRouter(
 );
 router.use("/", variantRouter.route);
 
+router.use("/", new UserRouter().route);
 router.use("/", new OrderRouter().route);
 router.use("/", new OrderDetailRouter().route);
 router.use("/", new VariantProductRouter().route);

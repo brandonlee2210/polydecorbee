@@ -81,6 +81,30 @@ export default class OrderController extends BaseController {
     }
   };
 
+  saveOrderFromVNP = async (orderDataSave) => {
+    try {
+      const { orderData, orderDetailsData } = orderDataSave;
+
+      let orderRes = await Order.create(orderData);
+
+      // create order details array with order id
+      orderDetailsData.forEach((detail, index) => {
+        detail.orderID = orderRes._id;
+        detail.color = orderDetailsData[index].color;
+        detail.material = orderDetailsData[index].material;
+        detail.price = orderDetailsData[index].price;
+        detail.quantity = +orderDetailsData[index].quantity;
+      });
+
+      console.log(orderDetailsData, "VNP");
+
+      // Create and save order details
+      const orderDetails = await OrderDetail.insertMany(orderDetailsData);
+    } catch (error) {
+      console.error("Error saving order and order details:", error);
+    }
+  };
+
   saveOrder = async (req, res) => {
     try {
       const { orderData, orderDetailsData } = req.body;

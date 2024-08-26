@@ -11,15 +11,34 @@ export default class OrderController extends BaseController {
     super(Order);
   }
 
-  getVariantsByCategoryId = async (req, res) => {
+  getVariantsByCategoryId = async (request, response) => {
     try {
-      const { categoryName } = req.params;
-      console.log("categoryNamewe", categoryName);
+      const { categoryName } = request.params;
       const variants = await Variant.find({ categoryName: categoryName });
-      res.json(variants);
+      let page = parseInt(request.query.page) || 1;
+      let limit = parseInt(request.query.limit) || 4;
+      let startIndex = (page - 1) * limit;
+      let endIndex = page * limit;
+      let results = {};
+
+      results.total = variants.length;
+      results.data = variants.slice(startIndex, endIndex);
+
+      results.data = results.data.sort((a, b) => a._id - b._id);
+
+      let pagination = {
+        current: page,
+        pageSize: 4,
+        total: results.data.length,
+      };
+
+      results.pagination = pagination;
+
+      return response.status(200).json(results);
+      // res.json(variants);
     } catch (error) {
       console.error("Error getting variants by category ID:", error);
-      res.status(500).json({ message: "Error getting variants" });
+      response.status(500).json({ message: "Error getting variants" });
     }
   };
 
@@ -31,7 +50,7 @@ export default class OrderController extends BaseController {
       // if (!user) {
       //   return res.status(404).json({ message: "User not found" });
       // }
-      const orders = await Order.find({ userID: "60d5ec49f8d2c72b8c8e4b8b" });
+      const orders = await Order.find({ userID: req.params.userId });
       res.json(orders);
     } catch (error) {
       console.error("Error getting orders by user ID:", error);
@@ -70,7 +89,7 @@ export default class OrderController extends BaseController {
         { variants: variant.variants },
         { new: true }
       );
-      console.log(response);
+      // console.log(response);
 
       order.status = parseInt(status);
       await order.save();
@@ -78,6 +97,30 @@ export default class OrderController extends BaseController {
     } catch (error) {
       console.error("Error updating stock:", error);
       res.status(500).json({ message: "Error updating stock" });
+    }
+  };
+
+  saveOrderFromVNP = async (orderDataSave) => {
+    try {
+      const { orderData, orderDetailsData } = orderDataSave;
+
+      let orderRes = await Order.create(orderData);
+
+      // create order details array with order id
+      orderDetailsData.forEach((detail, index) => {
+        detail.orderID = orderRes._id;
+        detail.color = orderDetailsData[index].color;
+        detail.material = orderDetailsData[index].material;
+        detail.price = orderDetailsData[index].price;
+        detail.quantity = +orderDetailsData[index].quantity;
+      });
+
+      // console.log(orderDetailsData, "VNP");
+
+      // Create and save order details
+      const orderDetails = await OrderDetail.insertMany(orderDetailsData);
+    } catch (error) {
+      console.error("Error saving order and order details:", error);
     }
   };
 
@@ -96,7 +139,7 @@ export default class OrderController extends BaseController {
         detail.quantity = +orderDetailsData[index].quantity;
       });
 
-      console.log(orderDetailsData);
+      // console.log(orderDetailsData);
 
       // Create and save order details
       const orderDetails = await OrderDetail.insertMany(orderDetailsData);
@@ -117,7 +160,7 @@ export default class OrderController extends BaseController {
       const { orderId } = req.params;
       const orderDetails = await OrderDetail.find({ orderID: orderId });
 
-      console.log("orderDetails", orderDetails);
+      // console.log("orderDetails", orderDetails);
 
       // create list promist to wait all  and call find variant by id
       // const variantPromises = orderDetails.map(async (detail) => {

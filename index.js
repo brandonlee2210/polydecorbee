@@ -100,6 +100,10 @@ app.post("/api/v1/send-email", (req, res) => {
             <p><strong>Địa Chỉ Giao Hàng:</strong> [Địa Chỉ Giao Hàng]</p>
             <p><strong>Dự Kiến Ngày Giao Hàng:</strong> [Ngày Giao Dự Kiến]</p>
             <p><strong>Trạng Thái Đơn Hàng:</strong> [Trạng Thái Hiện Tại của Đơn Hàng]</p>
+            <h3>Chi Tiết Sản Phẩm:</h3>
+            <ul>
+              [Danh Sách Sản Phẩm]
+            </ul>
         </div>
         
         <p>Bạn có thể theo dõi trạng thái đơn hàng và xem thêm chi tiết bằng cách đăng nhập vào tài khoản của bạn trên trang web của chúng tôi <a href="[URL Trang Web]">tại đây</a> hoặc liên hệ với đội ngũ chăm sóc khách hàng của chúng tôi.</p>
@@ -121,7 +125,21 @@ app.post("/api/v1/send-email", (req, res) => {
 </html>
 `;
   // Customize the HTML content
-  let { total, address, status, date } = req.body;
+  let { total, address, status, date, products, email, phoneNumber } = req.body;
+
+  // Generate product list HTML
+  let productListHtml = products
+    .map(
+      (product) => `
+    <li>
+      <p><strong>Tên Sản Phẩm:</strong> ${product.name}</p>
+      <p><strong>Số Lượng:</strong> ${product.quantity}</p>
+      <p><strong>Giá:</strong> ${product.price}</p>
+    </li>
+  `
+    )
+    .join("");
+
   let customizedHtml = html
     .replace("[Tên Khách Hàng]", "bạn") // Replace with actual customer name
     .replace("[Số Đơn Hàng]", "123456") // Replace with actual order number
@@ -131,13 +149,14 @@ app.post("/api/v1/send-email", (req, res) => {
     .replace("[Địa Chỉ Giao Hàng]", address) // Replace with actual shipping address
     .replace("[Ngày Giao Dự Kiến]", "15/08/2024") // Replace with actual delivery date
     .replace("[Trạng Thái Hiện Tại của Đơn Hàng]", "Chờ xác nhận") // Replace with actual order status
+    .replace("[Danh Sách Sản Phẩm]", productListHtml)
     .replace("[URL Trang Web]", "https://example.com") // Replace with actual URL
     .replace("[Email/Điện Thoại Chăm Sóc Khách Hàng]", "support@example.com"); // Replace with actual contact
 
   // Setup email data
   let mailOptions = {
     from: '"Poly Decor Shop" <your-email@gmail.com>', // sender address
-    to: "sonpnph30176@fpt.edu.vn", // list of receivers
+    to: email, // list of receivers
     subject: "Xác Nhận Đơn Hàng", // Subject line
     html: customizedHtml, // HTML body content
   };

@@ -70,7 +70,7 @@ class BaseController {
 
   async delete(req, res) {
     let rowDeleted = await this.model.findByIdAndDelete(req.params.id);
-    console.log(rowDeleted, "row deleted");
+    // console.log(rowDeleted, "row deleted");
     return res.status(200).json(rowDeleted);
   }
 
@@ -88,8 +88,7 @@ class BaseController {
 
     results.data = res.slice(startIndex, endIndex);
 
-    // sap xep theo id
-    results.data = results.data.sort((a, b) => a._id - b._id);
+    results.data = results.data.sort((a, b) => b._id - a._id);
 
     let pagination = {
       current: page,
@@ -107,7 +106,7 @@ class BaseController {
     let rowsDeleted = await this.model.deleteMany({});
 
     // log the number of rows deleted
-    console.log(rowsDeleted, "rows deleted");
+    // console.log(rowsDeleted, "rows deleted");
     return res.status(200).json(rowsDeleted);
   }
 

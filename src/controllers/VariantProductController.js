@@ -33,4 +33,34 @@ export default class VariantController extends BaseController {
 
     return response.status(200).json(results);
   }
+
+  async getAllColor(request, response) {
+    try {
+      const colors = await VariantProduct.find({
+        variantProductType: "color",
+      });
+      if (colors.length === 0) {
+        return response.status(404).json({ message: "No color found" });
+      }
+      return response.status(200).json(colors);
+    } catch (error) {
+      console.error("Error fetching colors:", error);
+      response.status(500).json({ message: error.message });
+    }
+  }
+
+  async getAllMaterial(reqest, response) {
+    try {
+      const materials = await VariantProduct.find({
+        variantProductType: "material",
+      });
+      if (materials.length === 0) {
+        return response.status(404).json({ message: "No material found" });
+      }
+      return response.status(200).json(materials);
+    } catch (error) {
+      console.error("Error fetching materials:", error);
+      response.status(500).json({ message: error.message });
+    }
+  }
 }

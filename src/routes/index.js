@@ -33,12 +33,17 @@ variantRouter.addRouter(
   "/variants/filtered",
   variantRouter.controller.getAllPaginationFiltered
 );
+
+variantRouter.addRouter(
+  "get",
+  "/variants/getall/productnopagination",
+  variantRouter.controller.getAllVariantNoPagination
+);
 router.use("/", variantRouter.route);
 
 router.use("/", new UserRouter().route);
 router.use("/", new OrderRouter().route);
 router.use("/", new OrderDetailRouter().route);
-router.use("/", new VariantProductRouter().route);
 router.use("/", new ReviewRouter().route);
 
 const commentRouter = new CommentRouter();
@@ -75,6 +80,20 @@ orderRouter.addRouter(
   "/orders/details/:orderId",
   orderRouter.controller.getOrderDetailsByOrderId
 );
+
+const variantProductRouter = new VariantProductRouter();
+variantProductRouter.addRouter(
+  "get",
+  "/variantProducts/colors/getall",
+  variantProductRouter.controller.getAllColor
+);
+
+variantProductRouter.addRouter(
+  "get",
+  "/variantProducts/materials/getall",
+  variantProductRouter.controller.getAllMaterial
+);
+router.use("/", variantProductRouter.route);
 
 router.post("/create_payment_url", function (req, res, next) {
   process.env.TZ = "Asia/Ho_Chi_Minh";

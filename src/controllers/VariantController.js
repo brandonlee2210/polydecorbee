@@ -7,8 +7,6 @@ export default class VariantController extends BaseController {
     super(Variant);
   }
 
-  x;
-
   async getAllPaginationFiltered(request, response) {
     let { keyword, color, material, price, page, limit } = request.body;
 
@@ -72,5 +70,10 @@ export default class VariantController extends BaseController {
     };
     results.pagination = pagination;
     return response.status(200).json(results);
+  }
+
+  async getAllVariantNoPagination(req, res) {
+    const variants = await Variant.find();
+    return res.status(200).json(variants);
   }
 }

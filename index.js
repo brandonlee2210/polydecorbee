@@ -125,7 +125,7 @@ app.post("/api/v1/send-email", (req, res) => {
 </html>
 `;
   // Customize the HTML content
-  let { total, address, status, date, products } = req.body;
+  let { total, address, status, date, products, email, phoneNumber } = req.body;
 
   // Generate product list HTML
   let productListHtml = products
@@ -156,7 +156,7 @@ app.post("/api/v1/send-email", (req, res) => {
   // Setup email data
   let mailOptions = {
     from: '"Poly Decor Shop" <your-email@gmail.com>', // sender address
-    to: "baodgph30207@fpt.edu.vn", // list of receivers
+    to: email, // list of receivers
     subject: "Xác Nhận Đơn Hàng", // Subject line
     html: customizedHtml, // HTML body content
   };

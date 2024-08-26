@@ -34,6 +34,10 @@ const orderDetailSchema = new mongoose.Schema({
   material: {
     type: String,
   },
+  image: {
+    type: String,
+    default: "/images/default.png",
+  },
   createdDate: {
     type: Date,
     default: Date.now,

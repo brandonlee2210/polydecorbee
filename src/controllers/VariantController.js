@@ -7,6 +7,21 @@ export default class VariantController extends BaseController {
     super(Variant);
   }
 
+  // add list variant to collection
+  async addListVariant(request, response) {
+    let { products } = request.body;
+    // check if name is exist
+    let res = await products.map((variant) => {
+      if (!variant.name) {
+        return response.status(400).json({ message: "Name is required" });
+      }
+      return variant;
+    });
+    res = await Promise.all(res);
+    let savedVariants = await Variant.insertMany(res);
+    return response.status(201).json(savedVariants);
+  }
+
   async getAllPaginationFiltered(request, response) {
     let { keyword, color, material, price, page, limit } = request.body;
 

@@ -35,6 +35,12 @@ variantRouter.addRouter(
 );
 
 variantRouter.addRouter(
+  "post",
+  "/addVariants/addListVariants",
+  variantRouter.controller.addListVariant
+);
+
+variantRouter.addRouter(
   "get",
   "/variants/getall/productnopagination",
   variantRouter.controller.getAllVariantNoPagination

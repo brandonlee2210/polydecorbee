@@ -86,9 +86,9 @@ class BaseController {
 
     results.total = res.length;
 
-    results.data = res.slice(startIndex, endIndex);
+    res = res.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
 
-    results.data = results.data.sort((a, b) => b._id - a._id);
+    results.data = res.slice(startIndex, endIndex);
 
     let pagination = {
       current: page,

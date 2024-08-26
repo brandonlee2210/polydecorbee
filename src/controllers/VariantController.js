@@ -52,7 +52,7 @@ export default class VariantController extends BaseController {
       );
     });
 
-    console.log(res);
+    // console.log(res);
 
     // handle pagination
     page = parseInt(page) || 1;

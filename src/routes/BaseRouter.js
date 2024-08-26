@@ -1,9 +1,6 @@
 import { Router } from "express";
 
-import // requireAuth,
-// checkUser,
-// checkAdmin,
-"../middlewares/authMiddleware.js";
+import "../middlewares/authMiddleware.js";
 
 class BaseRouter {
   constructor(controller, routeName) {

@@ -37,7 +37,23 @@ router.use("/", variantRouter.route);
 
 router.use("/", new UserRouter().route);
 router.use("/", new OrderRouter().route);
-router.use("/", new OrderDetailRouter().route);
+const orderDetailRouter = new OrderDetailRouter();
+orderDetailRouter.addRouter(
+  "get",
+  "/statistic/products-by-month",
+  orderDetailRouter.controller.getMostOrderDetailCreatedThroughEachMonth
+);
+orderDetailRouter.addRouter(
+  "get",
+  "/statistic/list-data",
+  orderDetailRouter.controller.getAllOrdersWithDetailsAndUsers
+);
+orderDetailRouter.addRouter(
+  "get",
+  "/statistic/revenue-each",
+  orderDetailRouter.controller.getAllRevenueEachMonth
+);
+router.use("/", orderDetailRouter.route);
 router.use("/", new VariantProductRouter().route);
 router.use("/", new ReviewRouter().route);
 

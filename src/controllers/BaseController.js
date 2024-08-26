@@ -88,8 +88,7 @@ class BaseController {
 
     results.data = res.slice(startIndex, endIndex);
 
-    // sap xep theo id
-    results.data = results.data.sort((a, b) => a._id - b._id);
+    results.data = results.data.sort((a, b) => b._id - a._id);
 
     let pagination = {
       current: page,

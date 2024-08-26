@@ -7,8 +7,6 @@ export default class VariantController extends BaseController {
     super(Variant);
   }
 
-  x;
-
   async getAllPaginationFiltered(request, response) {
     let { keyword, color, material, price, page, limit } = request.body;
 

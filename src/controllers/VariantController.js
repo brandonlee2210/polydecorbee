@@ -55,8 +55,10 @@ export default class VariantController extends BaseController {
     // handle pagination
     page = parseInt(page) || 1;
     limit = parseInt(limit) || 2;
+    // let startIndex = (page - 1) * limit;
+    // let endIndex = page * limit;
     let startIndex = (page - 1) * limit;
-    let endIndex = page * limit;
+    let endIndex = startIndex + limit;
     let results = {};
 
     results.total = res.length;

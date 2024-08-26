@@ -31,7 +31,7 @@ export default class OrderController extends BaseController {
       // if (!user) {
       //   return res.status(404).json({ message: "User not found" });
       // }
-      const orders = await Order.find({ userID: "60d5ec49f8d2c72b8c8e4b8b" });
+      const orders = await Order.find({ userID: req.params.userId });
       res.json(orders);
     } catch (error) {
       console.error("Error getting orders by user ID:", error);

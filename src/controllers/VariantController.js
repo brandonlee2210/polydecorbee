@@ -7,8 +7,6 @@ export default class VariantController extends BaseController {
     super(Variant);
   }
 
-  x;
-
   async getAllPaginationFiltered(request, response) {
     let { keyword, color, material, price, page, limit } = request.body;
 
@@ -52,13 +50,15 @@ export default class VariantController extends BaseController {
       );
     });
 
-    console.log(res);
+    // console.log(res);
 
     // handle pagination
     page = parseInt(page) || 1;
     limit = parseInt(limit) || 2;
+    // let startIndex = (page - 1) * limit;
+    // let endIndex = page * limit;
     let startIndex = (page - 1) * limit;
-    let endIndex = page * limit;
+    let endIndex = startIndex + limit;
     let results = {};
 
     results.total = res.length;
@@ -72,5 +72,10 @@ export default class VariantController extends BaseController {
     };
     results.pagination = pagination;
     return response.status(200).json(results);
+  }
+
+  async getAllVariantNoPagination(req, res) {
+    const variants = await Variant.find();
+    return res.status(200).json(variants);
   }
 }

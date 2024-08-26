@@ -90,7 +90,7 @@ app.post("/api/v1/send-email", (req, res) => {
 <body>
     <div class="container">
         <h1>Đơn Hàng Của Bạn Đã Được Đặt Thành Công!</h1>
-        <p>Chào [Tên Khách Hàng],</p>
+        <p>Xin chào bạn [Tên Khách Hàng],</p>
         <p>Chúng tôi xin cảm ơn bạn vì đã mua hàng!</p>
         <p>Chúng tôi rất vui được thông báo rằng đơn hàng #[Số Đơn Hàng] của bạn đã được đặt thành công. Dưới đây là chi tiết đơn hàng của bạn:</p>
         
@@ -125,29 +125,61 @@ app.post("/api/v1/send-email", (req, res) => {
 </html>
 `;
   // Customize the HTML content
-  let { total, address, status, date, products, email, phoneNumber } = req.body;
+  console.log("thông tin order",req.body);
+  
+  let { total, address, status, date, products, email, phoneNumbern, fullname } = req.body;
+  console.log("tên người dùng", fullname);
+  
+  const currentDate = new Date();
+  const futureDate = new Date(currentDate.setDate(currentDate.getDate() + 5));
 
+  // Format the date as DD/MM/YYYY
+  const day = futureDate.getDate().toString().padStart(2, "0");
+  const month = (futureDate.getMonth() + 1).toString().padStart(2, "0"); // Months are 0-based
+  const year = futureDate.getFullYear();
+
+  const formattedDate = `${day}/${month}/${year}`;
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(amount);
+  };
   // Generate product list HTML
   let productListHtml = products
     .map(
       (product) => `
-    <li>
-      <p><strong>Tên Sản Phẩm:</strong> ${product.name}</p>
-      <p><strong>Số Lượng:</strong> ${product.quantity}</p>
-      <p><strong>Giá:</strong> ${product.price}</p>
+    <li style="border: 1px solid #e4e4e4; border-radius: 8px; margin-bottom: 20px; padding: 20px; background: #ffffff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); width: 600px;">
+      <h3 style="margin-top: 0; font-size: 18px; color: #333;">Tên Sản Phẩm: ${
+        product.name
+      }</h3>
+        <p style="margin: 5px 0; font-size: 16px; font-weight: bold; color: #333;">Giá: ${formatCurrency(
+          product.price
+        )} </p>
+      <p style="margin: 5px 0; font-size: 16px; font-weight: bold; color: #333;">Số Lượng: ${
+        product.quantity
+      }</p>
+
+      <div style="text-align: center; margin: 10px 0;width: 300px;">
+        <img src="${product.image}" alt="${
+        product.name
+      }" style="width: 220px; height: auto; border-radius: 8px;"/>
+        <p style="margin: 5px 0; font-size: 14px; color: #666;">Hình Ảnh Sản Phẩm</p>
+      </div>
+    
     </li>
   `
     )
     .join("");
 
   let customizedHtml = html
-    .replace("[Tên Khách Hàng]", "bạn") // Replace with actual customer name
+    .replace("[Tên Khách Hàng]", fullname) // Replace with actual customer name
     .replace("[Số Đơn Hàng]", "123456") // Replace with actual order number
     // .replace("[Tên Sản Phẩm]", "Sản phẩm XYZ") // Replace with actual product name
     // .replace("[Số Lượng]", "2") // Replace with actual quantity
-    .replace("[Tổng Số Tiền]", total) // Replace with actual total amount
+    .replace("[Tổng Số Tiền]",formatCurrency( total)) // Replace with actual total amount
     .replace("[Địa Chỉ Giao Hàng]", address) // Replace with actual shipping address
-    .replace("[Ngày Giao Dự Kiến]", "15/08/2024") // Replace with actual delivery date
+    .replace("[Ngày Giao Dự Kiến]", formattedDate) // Replace with actual delivery date
     .replace("[Trạng Thái Hiện Tại của Đơn Hàng]", "Chờ xác nhận") // Replace with actual order status
     .replace("[Danh Sách Sản Phẩm]", productListHtml)
     .replace("[URL Trang Web]", "https://example.com") // Replace with actual URL

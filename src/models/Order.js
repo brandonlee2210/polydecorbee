@@ -14,6 +14,10 @@ const orderSchema = new mongoose.Schema({
     type: String,
     default: "gia bảo",
   },
+  email: {
+    type: String,
+    default: "sonpnph",
+  },
   phoneNumber: {
     type: String,
     default: "0364350578",
@@ -24,6 +28,9 @@ const orderSchema = new mongoose.Schema({
   },
   paymentID: {
     type: mongoose.Schema.Types.ObjectId,
+  },
+  paymentMethod: {
+    type: String,
   },
   status: {
     type: Number,
